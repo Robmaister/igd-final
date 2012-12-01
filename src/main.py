@@ -4,13 +4,13 @@ Created on Nov 16, 2012
 @author: robert
 '''
 
-import pygame, sys
+import pygame
 import game
 
 g = game.Game()
 while True:
-    g.clock.tick()
+    g.clock.tick(61)
     g.update()
     g.draw()
     pygame.display.flip()
-    pygame.display.update()
+    #pygame.display.update()
