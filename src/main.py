@@ -1,7 +1,12 @@
+#!/usr/bin/env python
 '''
 Created on Nov 16, 2012
 
-@author: robert
+@author: Robert Rouhani
+@copyright: Copyright (c) 2012, Robert Rouhani
+
+@license: MIT
+@version: 0.1
 '''
 
 import pygame
@@ -13,4 +18,4 @@ while True:
     g.update()
     g.draw()
     pygame.display.flip()
-    #pygame.display.update()
+    #pygame.display.replay_step()
