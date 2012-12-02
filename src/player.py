@@ -42,18 +42,18 @@ class Player(object):
         """
         if keys[pygame.K_w]:
             if not self.jumping:
-                self.vely -= 70
+                self.vely -= 700
         #if keys[pygame.K_s]:
             #pass
         if keys[pygame.K_a]:
-            self.velx = -10
-        if keys[pygame.K_d]:
-            self.velx = 10
-        if not (keys[pygame.K_a] or keys[pygame.K_d]):
+            self.velx = -300
+        elif keys[pygame.K_d]:
+            self.velx = 300
+        else:
             self.velx = 0
         
         if self.jumping:
-            self.vely += 5
+            self.vely += 25
             
         #separate collision detection/resolution by axis.
         self.rect.left += self.velx * 0.016
@@ -86,6 +86,7 @@ class Player(object):
     def respawn(self):
         self.velx = 0
         self.vely = 0
+        self.jumping = True
         self.rect.topleft = (self.spawn_x, self.spawn_y)
         
 if __name__ == "__main__":

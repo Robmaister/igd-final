@@ -46,7 +46,7 @@ class Level(object):
                     if 0 <= num <= 15:
                         tile_rect = pygame.rect.Rect((num % 4, num / 4), (32, 32))
                         self.map_surface.blit(self.tileset, (j * 32, i * 32), tile_rect)
-                        self.phys_rects.append(tile_rect)
+                        self.phys_rects.append(pygame.rect.Rect((j * 32, i * 32), (32, 32)))
         
         
     

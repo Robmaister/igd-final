@@ -42,7 +42,7 @@ class Game(object):
             self.currentlife[-1].frames += 1
 
         for life in self.prevlives:
-            life.replay_step()
+            life.replay_step(self.level.phys_rects)
             
         self.player.update(pressedkeys, self.level.phys_rects)
         
@@ -54,10 +54,9 @@ class Game(object):
             life.player.draw(self.screen)
             
     def die(self):
-        self.prevlives.append(replay.PreviousLife(self.currentlife))
+        self.prevlives.append(replay.PreviousLife(self.currentlife, player.Player(self.level.spawn_x, self.level.spawn_y)))
         self.currentlife = [replay.InputState(pygame.key.get_pressed())]
-        self.player.rect.left = 0
-        self.player.rect.top = 0
+        self.player.respawn()
         for life in self.prevlives:
             life.replay_reset()
             

@@ -9,8 +9,6 @@ Created on Nov 30, 2012
 @version: 0.1
 '''
 
-import player
-
 class InputState(object):
     """Stores a keyboard state and the number of frames it was held for."""
 
@@ -29,19 +27,21 @@ class PreviousLife(object):
     """Defines the actions of a previous player life. Allows for replay through
     the ."""
     
-    def __init__(self, state):
+    def __init__(self, state, player):
         """Initializes a new PreviousLife instance with a list of InputStates.
         
         @type state: InputStates
         @param state: A list of InputStates of the player's previous life.
+        @type player: Player
+        @param player: The player object to act on.
         
         """
         self.state = state
         self.index = 0
         self.frameoffset = 0
-        self.player = player.Player(0, 0)
+        self.player = player
     
-    def replay_step(self):
+    def replay_step(self, colliders):
         """Steps the replay forward by one frame."""
         self.frameoffset += 1
         if self.state[self.index].frames < self.frameoffset:
@@ -53,7 +53,7 @@ class PreviousLife(object):
                 self.player.vely = 0
                 self.player.accelx = 0
                 self.player.accely = 0
-        self.player.update(self.state[self.index].keys)
+        self.player.update(self.state[self.index].keys, colliders)
 
     def replay_complete(self):
         """Gets a value indicating whether the replay of the life has finished.
