@@ -11,7 +11,7 @@ Created on Nov 27, 2012
 
 import pygame, sys
 
-import player, level, replay
+import player, level, camera, replay
 
 class Game(object):
     def __init__(self):
@@ -25,6 +25,7 @@ class Game(object):
         self.prevlifeframe = 0
         self.level = level.Level("../assets/lvl/level0.lvl")
         self.player = player.Player(self.level.spawn_x, self.level.spawn_y)
+        self.camera = camera.Camera(self.screen, self.level.map_surface.get_rect(), pygame.rect.Rect((0, 0), (800, 600)))
         
     def update(self):
         pressedkeys = pygame.key.get_pressed()
@@ -45,13 +46,15 @@ class Game(object):
             life.replay_step(self.level.phys_rects)
             
         self.player.update(pressedkeys, self.level.phys_rects)
+        self.camera.center_at(self.player.rect)
+        self.camera.update()
         
     def draw(self):
         self.screen.fill((0, 0, 0))
-        self.level.draw(self.screen)
-        self.player.draw(self.screen)
+        self.level.draw(self.camera)
+        self.player.draw(self.camera)
         for life in self.prevlives:
-            life.player.draw(self.screen)
+            life.player.draw(self.camera)
             
     def die(self):
         self.prevlives.append(replay.PreviousLife(self.currentlife, player.Player(self.level.spawn_x, self.level.spawn_y)))
