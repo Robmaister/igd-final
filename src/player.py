@@ -30,6 +30,7 @@ class Player(object):
         self.velx = 0
         self.vely = 0
         self.jumping = True
+        self.readytojump = False
     
     def update(self, keys, colliders):
         """Updates the player.
@@ -41,19 +42,28 @@ class Player(object):
         
         """
         if keys[pygame.K_w]:
-            if not self.jumping:
+            if (not self.jumping) and self.readytojump:
                 self.vely -= 700
-        #if keys[pygame.K_s]:
-            #pass
-        if keys[pygame.K_a]:
-            self.velx = -300
-        elif keys[pygame.K_d]:
-            self.velx = 300
+                self.readytojump = False
         else:
-            self.velx = 0
+            if not self.jumping:
+                self.readytojump = True
+        if keys[pygame.K_s] and self.jumping:
+            self.vely += 20
+        if keys[pygame.K_a]:
+            self.velx = -400
+        elif keys[pygame.K_d]:
+            self.velx = 400
+        else:
+            if self.velx > 0:
+                self.velx = max(0, self.velx - 50)
+            elif self.velx < 0:
+                self.velx = min(0, self.velx + 50)
         
         if self.jumping:
-            self.vely += 25
+            self.vely += 30
+            
+        self.vely = min(2000, self.vely) #terminal velocity
             
         #separate collision detection/resolution by axis.
         self.rect.left += self.velx * 0.016
