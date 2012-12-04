@@ -26,6 +26,7 @@ class Game(object):
         self.level = level.Level("../assets/lvl/level0.lvl")
         self.player = player.Player(self.level.spawn_x, self.level.spawn_y)
         self.camera = camera.Camera(self.screen, self.level.map_surface.get_rect(), pygame.rect.Rect((0, 0), (800, 600)))
+        self.background = camera.ParallaxBackground(self.camera, 0.5, "../assets/img/background.png")
         
     def update(self):
         pressedkeys = pygame.key.get_pressed()
@@ -51,6 +52,7 @@ class Game(object):
         
     def draw(self):
         self.screen.fill((17, 25, 27))
+        self.background.draw(self.screen)
         self.level.draw(self.camera)
         self.player.draw(self.camera)
         for life in self.prevlives:

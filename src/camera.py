@@ -10,6 +10,22 @@ Created on Dec 3, 2012
 
 import pygame
 
+class ParallaxBackground(object):
+    
+    def __init__(self, camera, p, img):
+        self.cam = camera
+        self.img = pygame.image.load(img).convert()
+        self.p = p
+        
+    def draw(self, screen):
+        imgrect = self.img.get_rect()
+        newrect = pygame.rect.Rect((self.cam.view.x * -self.p, self.cam.view.y * -self.p), (imgrect.width, imgrect.height))
+        if newrect.x > 0: newrect.x = 0
+        if newrect.y > 0: newrect.y = 0
+        if newrect.x < -imgrect.width + self.cam.view.width: newrect.x = -imgrect.width + self.cam.view.width
+        if newrect.y < -imgrect.height + self.cam.view.height: newrect.y = -imgrect.height + self.cam.view.height
+        screen.blit(self.img, (newrect.x, newrect.y))
+
 class Camera(object):
     '''
     classdocs

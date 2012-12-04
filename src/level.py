@@ -41,7 +41,7 @@ class Level(object):
                 startmapdata = i + 1
                 break
             
-        self.map_surface = pygame.Surface((mapsize_x * 32, mapsize_y * 32))
+        self.map_surface = pygame.Surface((mapsize_x * 32, mapsize_y * 32), pygame.SRCALPHA)
         self.phys_tiles = []
         
         for i,row in enumerate(lines[startmapdata:]):
