@@ -43,14 +43,14 @@ class Game(object):
             self.currentlife[-1].frames += 1
 
         for life in self.prevlives:
-            life.replay_step(self.level.phys_rects)
+            life.replay_step(self.level.phys_tiles)
             
-        self.player.update(pressedkeys, self.level.phys_rects)
+        self.player.update(pressedkeys, self.level.phys_tiles)
         self.camera.center_at(self.player.rect)
         self.camera.update()
         
     def draw(self):
-        self.screen.fill((0, 0, 0))
+        self.screen.fill((17, 25, 27))
         self.level.draw(self.camera)
         self.player.draw(self.camera)
         for life in self.prevlives:

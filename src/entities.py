@@ -8,13 +8,13 @@ Created on Dec 3, 2012
 @version: 0.1
 '''
 
-class Entity(object):
-    '''
-    classdocs
-    '''
+import pygame
 
-    def __init__(self):
-        '''
-        Constructor
-        '''
-        pass
+class Button(object):
+    
+    def __init__(self, x, y):
+        self.img = pygame.image.load("../assets/img/player.png").convert()
+        self.rect = pygame.rect.Rect(x, y, 32, 32)
+        
+    def get_rect(self):
+        return self.rect

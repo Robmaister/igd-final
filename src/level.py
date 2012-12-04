@@ -11,9 +11,16 @@ Created on Nov 27, 2012
 
 import pygame
 
+class Tile(object):
+    def __init__(self, rect):
+        self.rect = rect
+        
+    def get_rect(self):
+        return self.rect
+
 class Level(object):
     def __init__(self, path):
-        self.tileset = pygame.image.load("../assets/img/tileset.png").convert()
+        self.tileset = pygame.image.load("../assets/img/tileset.png").convert_alpha()
         self.spawn_x = 0
         self.spawn_y = 0
         
@@ -35,18 +42,18 @@ class Level(object):
                 break
             
         self.map_surface = pygame.Surface((mapsize_x * 32, mapsize_y * 32))
-        self.phys_rects = []
+        self.phys_tiles = []
         
         for i,row in enumerate(lines[startmapdata:]):
             for j,col in enumerate(row):
                 if col == 'n': #blank tiles
                     continue
-                elif col.isdigit():
-                    num=int(col)
+                elif col.isdigit() or col in ('a', 'b', 'c', 'd', 'e', 'f'):
+                    num=int(col, 16)
                     if 0 <= num <= 15:
-                        tile_rect = pygame.rect.Rect((num % 4, num / 4), (32, 32))
+                        tile_rect = pygame.rect.Rect(((num % 4) * 32, (num / 4) * 32), (32, 32))
                         self.map_surface.blit(self.tileset, (j * 32, i * 32), tile_rect)
-                        self.phys_rects.append(pygame.rect.Rect((j * 32, i * 32), (32, 32)))
+                        self.phys_tiles.append(Tile(pygame.rect.Rect((j * 32, i * 32), (32, 32))))
         
         
     

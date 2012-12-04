@@ -66,20 +66,22 @@ class Player(object):
         #separate collision detection/resolution by axis.
         self.rect.left += self.velx * 0.016
         for c in colliders:
-            if self.rect.colliderect(c):
-                if self.velx > 0: self.rect.right = c.left
-                elif self.velx < 0: self.rect.left = c.right
+            r = c.get_rect()
+            if self.rect.colliderect(r):
+                if self.velx > 0: self.rect.right = r.left
+                elif self.velx < 0: self.rect.left = r.right
                 
         self.jumping = True
         self.rect.top += self.vely * 0.016
         for c in colliders:
-            if self.rect.colliderect(c):
+            r = c.get_rect()
+            if self.rect.colliderect(r):
                 if self.vely > 0:
-                    self.rect.bottom = c.top
+                    self.rect.bottom = r.top
                     self.vely = 0
                     self.jumping = False
                 elif self.vely < 0:
-                    self.rect.top = c.bottom
+                    self.rect.top = r.bottom
                     self.vely = 0 #start falling
         
 
@@ -96,6 +98,9 @@ class Player(object):
         self.vely = 0
         self.jumping = True
         self.rect.topleft = (self.spawn_x, self.spawn_y)
+        
+    def get_rect(self):
+        return self.rect
         
 if __name__ == "__main__":
     import main

@@ -22,6 +22,7 @@ class Camera(object):
         self.bounds = bounds
         self.view = view
         self.screen = screen
+        self.original_pos = (view.x, view.y)
         self.target_pos = (view.x, view.y)
         
     def move_to(self, pos):
