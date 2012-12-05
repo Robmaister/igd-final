@@ -26,7 +26,7 @@ class Game(object):
         self.level = level.Level("../assets/lvl/level0.lvl")
         self.player = player.Player(self.level.spawn_x, self.level.spawn_y)
         self.camera = camera.Camera(self.screen, self.level.map_surface.get_rect(), pygame.rect.Rect((0, 0), (800, 600)))
-        self.background = camera.ParallaxBackground(self.camera, 0.5, "../assets/img/background.png")
+        self.background = camera.ParallaxBackground(self.camera, 0.4, "../assets/img/background.png")
         
     def update(self):
         pressedkeys = pygame.key.get_pressed()
