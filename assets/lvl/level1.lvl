@@ -1,9 +1,3 @@
-spawn 96 718
-slidingblock 1088 608 door
-levelend 2144 64 end
-spike -32 288 20 0 spk
-button 160 288 btn door spk
-mapinfo 67 25
 oooooooooooooooooooooooooooooooooooooooooooooooooooo00000000000000o
 ooooooooooooooooooooooooooooooooooooooooooooooooooo5nnnnnnnnnnnnnn8
 ooooooooooooooooooooooooooooooooooooooooooooooooooo5nnnnnnnnnnnnnnn

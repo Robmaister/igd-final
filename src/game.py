@@ -36,6 +36,11 @@ class Game(object):
                     sys.exit()
                 if e.key == pygame.K_k:
                     self.die()
+            elif e.type == pygame.QUIT:
+                sys.exit()
+            elif e.type == pygame.USEREVENT + 2: #level win
+                self.level = level.Level("../assets/lvl/level1.lvl")
+                #TODO reset stuff like previousLives
         
         #store current life's state.
         if pressedkeys != self.currentlife[-1].keys:
@@ -44,16 +49,28 @@ class Game(object):
             self.currentlife[-1].frames += 1
 
         for life in self.prevlives:
-            life.replay_step(self.level.phys_tiles)
+            life.replay_step(self.level.colliders)
             
-        self.player.update(pressedkeys, self.level.phys_tiles)
+        for ent in self.level.entities:
+            ent.update()
+            
+        self.player.update(pressedkeys, self.level.colliders)
         self.camera.center_at(self.player.rect)
         self.camera.update()
         
+        #call death code only if current player dies. Replays will simply stop working and disappear.
+        if self.player.dead:
+            self.die()
+        
     def draw(self):
         self.screen.fill((17, 25, 27))
+        
         self.background.draw(self.screen)
         self.level.draw(self.camera)
+        
+        for ent in self.level.entities:
+            ent.draw(self.camera)
+            
         self.player.draw(self.camera)
         for life in self.prevlives:
             life.player.draw(self.camera)
@@ -64,6 +81,8 @@ class Game(object):
         self.player.respawn()
         for life in self.prevlives:
             life.replay_reset()
+        for ent in self.level.entities:
+            ent.reset()
             
 if __name__ == "__main__":
     import main
