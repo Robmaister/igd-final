@@ -230,6 +230,3 @@ class Counter(object):
     
     def reset(self):
         self.value = 0
-    
-if __name__ == "__main__":
-    import main

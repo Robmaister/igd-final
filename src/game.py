@@ -51,7 +51,7 @@ class Game(object):
                 if self.level_count > 0:
                     sys.exit()
                 else:
-                    self.level = level.Level("../assets/lvl/ame islevel1.lvl")
+                    self.level = level.Level("../assets/lvl/level1.lvl")
                     self.prevlifeframe = 0
                     self.prevlifeindex = 0
                     self.prevlives = []
@@ -103,6 +103,3 @@ class Game(object):
             life.replay_reset()
         for ent in self.level.entities:
             ent.reset()
-            
-if __name__ == "__main__":
-    import main

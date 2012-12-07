@@ -59,6 +59,3 @@ class Camera(object):
         newdest = (dest[0] - self.view.x, dest[1] - self.view.y)
         ret_rect = self.screen.blit(source, newdest, area, special_flags)
         return ret_rect
-    
-if __name__ == "__main__":
-    import main

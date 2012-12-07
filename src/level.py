@@ -85,6 +85,3 @@ class Level(object):
     
     def draw(self, screen):
         screen.blit(self.map_surface, (0,0))
-        
-if __name__ == "__main__":
-    import main

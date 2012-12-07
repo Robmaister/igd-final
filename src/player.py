@@ -155,6 +155,3 @@ class Player(object):
         
     def get_rect(self):
         return self.rect
-        
-if __name__ == "__main__":
-    import main

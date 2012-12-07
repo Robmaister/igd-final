@@ -67,6 +67,3 @@ class PreviousLife(object):
         self.frameoffset = 0
         self.index = 0
         self.player.respawn()
-        
-if __name__ == "__main__":
-    import main

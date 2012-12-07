@@ -14,8 +14,7 @@ import game
 
 g = game.Game()
 while True:
-    g.clock.tick(61)
+    g.clock.tick(60)
     g.update()
     g.draw()
     pygame.display.flip()
-    #pygame.display.replay_step()
