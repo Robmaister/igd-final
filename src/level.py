@@ -41,12 +41,12 @@ class Level(object):
                 self.spawn_x = int(lineinfo[1])
                 self.spawn_y = int(lineinfo[2])
             elif lineinfo[0] == "button":
-                btn = entities.Button(int(lineinfo[1]), int(lineinfo[2]), lineinfo[3])
-                for name in lineinfo[4:]:
+                btn = entities.Button(int(lineinfo[1]), int(lineinfo[2]), lineinfo[3] == "1", lineinfo[4])
+                for name in lineinfo[5:]:
                     btn.connected.append(next(e for e in self.entities if e.name == name))
                 self.entities.append(btn)
             elif lineinfo[0] == "slidingblock":
-                self.entities.append(entities.SlidingBlock(int(lineinfo[1]), int(lineinfo[2]), lineinfo[3]))
+                self.entities.append(entities.SlidingBlock(int(lineinfo[1]), int(lineinfo[2]), lineinfo[3] == "1", lineinfo[4]))
             elif lineinfo[0] == "floorbutton":
                 btn = entities.FloorButton(int(lineinfo[1]), int(lineinfo[2]), lineinfo[3])
                 for name in lineinfo[4:]:
@@ -55,6 +55,11 @@ class Level(object):
                 self.entities.append(entities.Spike(int(lineinfo[1]), int(lineinfo[2]), int(lineinfo[3]), int(lineinfo[4]), lineinfo[5]))
             elif lineinfo[0] == "levelend":
                 self.entities.append(entities.LevelEnd(int(lineinfo[1]), int(lineinfo[2]), lineinfo[3]))
+            elif lineinfo[0] == "counter":
+                ct = entities.Counter(int(lineinfo[1]), lineinfo[2])
+                for name in lineinfo[3:]:
+                    ct.connected.append(next(e for e in self.entities if e.name == name))
+                self.entities.append(ct)
             elif lineinfo[0] == "mapinfo":
                 mapsize_x = int(lineinfo[1])
                 mapsize_y = int(lineinfo[2])

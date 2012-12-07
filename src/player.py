@@ -113,8 +113,6 @@ class Player(object):
                         self.vely = 0 #start falling
                 elif isinstance(c, entities.FloorButton):
                     c.pressed = True
-                elif isinstance(c, entities.LevelEnd):
-                    pygame.event.post(pygame.event.Event(pygame.USEREVENT + 2))
                 elif isinstance(c, entities.Spike):
                     self.dead = True
                     return

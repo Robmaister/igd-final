@@ -16,7 +16,6 @@ import player, level, camera, replay
 class Game(object):
     def __init__(self):
         pygame.init()
-        self.lastUpdateTime = pygame.time.get_ticks()
         self.screen = pygame.display.set_mode((800, 600))
         self.clock = pygame.time.Clock()
         self.prevlives = []
@@ -27,6 +26,7 @@ class Game(object):
         self.player = player.Player(self.level.spawn_x, self.level.spawn_y)
         self.camera = camera.Camera(self.screen, self.level.map_surface.get_rect(), pygame.rect.Rect((0, 0), (800, 600)))
         self.background = camera.ParallaxBackground(self.camera, 0.4, "../assets/img/background.png")
+        self.level_count = 0
         
     def update(self):
         pressedkeys = pygame.key.get_pressed()
@@ -36,11 +36,31 @@ class Game(object):
                     sys.exit()
                 if e.key == pygame.K_k:
                     self.die()
+                if e.key == pygame.K_r:
+                    self.prevlifeframe = 0
+                    self.prevlifeindex = 0
+                    self.prevlives = []
+                    self.currentlife = [replay.InputState(pygame.key.get_pressed())]
+                    self.player.respawn()
+                    for ent in self.level.entities:
+                        ent.reset()
             elif e.type == pygame.QUIT:
                 sys.exit()
             elif e.type == pygame.USEREVENT + 2: #level win
-                self.level = level.Level("../assets/lvl/level1.lvl")
-                #TODO reset stuff like previousLives
+                #TODO cleaner level changing, at the very least an array of levels...
+                if self.level_count > 0:
+                    sys.exit()
+                else:
+                    self.level = level.Level("../assets/lvl/level1.lvl")
+                    self.prevlifeframe = 0
+                    self.prevlifeindex = 0
+                    self.prevlives = []
+                    self.currentlife = [replay.InputState(pygame.key.get_pressed())]
+                    self.camera.bounds = self.level.map_surface.get_rect()
+                    self.player.spawn_x = self.level.spawn_x
+                    self.player.spawn_y = self.level.spawn_y
+                    self.player.respawn()
+                    self.level_count += 1
         
         #store current life's state.
         if pressedkeys != self.currentlife[-1].keys:
